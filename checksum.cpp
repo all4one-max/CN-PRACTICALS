@@ -18,7 +18,9 @@ string get_bin(int num) {
     return s;
 }
 
-string get_checksum(vector<string> store) {
+int get_sum(string data) {
+    vector<string> store;
+    for (int i = 0; i < data.size(); i += 4) store.push_back(data.substr(i, 4));
     vector<int> nums;
     for (auto it : store) nums.push_back(get_num(it));
     int sum = 0; for (auto it : nums) sum += it;
@@ -28,31 +30,20 @@ string get_checksum(vector<string> store) {
         reverse(first.begin(), first.end());  reverse(sec.begin(), sec.end());
         sum = get_num(first) + get_num(sec);
     }
+    return sum;
+}
+
+string send(string data) {
+    int sum = get_sum(data);
     string checksum = get_bin(sum); reverse(checksum.begin(), checksum.end());
     checksum = checksum.substr(0, 4);  reverse(checksum.begin(), checksum.end());
     for (int i = 0; i < 4; i++) checksum[i] = (checksum[i] == '1' ? '0' : '1');
     return checksum;
 }
 
-string send(string data) {
-    vector<string> store;
-    for (int i = 0; i < data.size(); i += 4) store.push_back(data.substr(i, 4));
-    string checksum = get_checksum(store);
-    return checksum;
-}
-
 int check(string data, string checksum) {
-    vector<string> store; store.push_back(checksum);
-    for (int i = 0; i < data.size(); i += 4) store.push_back(data.substr(i, 4));
-    vector<int> nums;
-    for (auto it : store) nums.push_back(get_num(it));
-    int sum = 0; for (auto it : nums) sum += it;
-    while (sum > 15) {
-        string bin = get_bin(sum); reverse(bin.begin(), bin.end());
-        string first = bin.substr(0, 4), sec = bin.substr(4, bin.size() - 4);
-        reverse(first.begin(), first.end());  reverse(sec.begin(), sec.end());
-        sum = get_num(first) + get_num(sec);
-    }
+    data = checksum + data;
+    int sum = get_sum(data);
     string val = get_bin(sum);
     reverse(val.begin(), val.end());
     int cnt = 0;
