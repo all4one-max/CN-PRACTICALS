@@ -12,8 +12,25 @@ int main() {
     // for printing erros
     freopen("Errors.txt", "w", stderr);
 # endif
+    srand(time(NULL));
+    int num_of_transmission = 0;
     cout << "ENTER NUMBER OF FRAMES" << endl; cin >> frames;
     cout << "ENTER WINDOW SIZE" << endl; cin >> window_size;
-    cout << 5 << endl;
+    int i = 1;
+    while (i <= frames) {
+        for (int j = i; j < i + window_size && j <= frames; j++) {
+            cout << "SENT FRAME " << j << endl;
+            num_of_transmission++;
+        }
+        int x = 0;
+        for (int j = i; j < i + window_size && j <= frames; j++) {
+            int stat = (rand() % 50) % 2;
+            if (!stat) break;
+            else cout << "RECEIVED ACKNOWLEDGEMENT FOR FRAME " << j << endl;
+            x++;
+        }
+        i += x;
+    }
+    cout << "TOTAL NUMBER OF TRANSMISSIONS ARE " << num_of_transmission << endl;
     return 0;
 }
