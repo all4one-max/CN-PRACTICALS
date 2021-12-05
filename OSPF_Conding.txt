@@ -1,0 +1,222 @@
+Assign static IP addresses to PCs
+PC0: 10.0.0.2
+PC1: 20.0.0.2
+
+Assign static IP addresses to Routers
+
+<-------------------Router0 Start------------------->
+Router0: (Input the following commands one per line; # denotes commands)
+
+# enable
+# configure terminal
+
+(Configuring the ethernet interface)
+# interface fastEthernet 0/0
+# ip address 10.0.0.1 255.0.0.0
+# no shutdown
+# exit
+
+# interface fastEthernet 0/1
+# ip address 192.168.1.1 255.255.255.252
+# no shutdown
+# exit
+
+(Configuring the serial interface0/0/0)
+# interface serial 0/0/0
+# ip address 192.168.0.1  255.255.255.252
+# clock rate 64000
+# bandwidth 64
+# no shutdown
+# exit
+
+(Configuring the serial interface0/0/1)
+# interface serial 0/0/1
+#ip address 192.168.2.1  255.255.255.252
+# clock rate 64000
+# bandwidth 64
+# no shutdown
+# exit
+<-------------------Router0 configured------------------->
+
+
+<-----------------------Router1 Start----------------------->
+Router1: (Input the following commands one per line; # denotes commands)
+
+# enable
+# configure terminal
+
+(Configuring the serial interface0/0/0)
+# interface serial 0/0/0
+# ip address 192.168.0.2 255.255.255.252
+# no shutdown
+# exit
+
+(Configuring the serial interface0/0/1)
+# interface serial 0/0/1
+# ip address 192.168.0.5 255.255.255.252
+# clock rate 64000
+# bandwidth 64
+# no shutdown
+# exit
+<-------------------Router1 configured------------------->
+
+
+<------------------------Router2 Start---------------------->
+Router2: (Input the following commands one per line; # denotes commands)
+
+# enable
+# configure terminal
+
+(Configuring the serial interface0/0/0)
+# interface serial 0/0/0
+# ip address 192.168.0.9 255.255.255.252
+# no shutdown
+# exit
+
+(Configuring the serial interface0/0/1)
+# interface serial 0/0/1
+# ip address 192.168.0.6 255.255.255.252
+# no shutdown
+# exit
+<-------------------Router2 configured------------------->
+
+
+<-----------------------Router3 Start----------------------->
+Router3: (Input the following commands one per line; # denotes commands)
+
+# enable
+# configure terminal
+
+(Configuring the serial interface0/0/0)
+# interface serial 0/0/0
+# ip address 192.168.2.5 255.255.255.252
+# no shutdown
+# exit
+
+(Configuring the serial interface0/0/1)
+# interface serial 0/0/1
+# ip address 192.168.2.2 255.255.255.252
+# no shutdown
+# exit
+<-------------------Router3 configured------------------->
+
+
+<------------------------Router4 Start---------------------->
+Router4: (Input the following commands one per line; # denotes commands)
+
+# enable
+# configure terminal
+
+(Configuring the serial interface0/0/0)
+# interface serial 0/0/0
+# ip address 192.168.2.6  255.255.255.252
+# no shutdown
+# exit
+
+(Configuring the serial interface0/0/1)
+# interface serial 0/0/1
+#ip address 192.168.2.9  255.255.255.252
+# no shutdown
+# exit
+<-------------------Router4 configured------------------->
+
+
+<-----------------------Router5 Start----------------------->
+Router5: (Input the following commands one per line; # denotes commands)
+
+# enable
+# configure terminal
+
+(Configuring the serial interface0/0/0)
+# interface fastEthernet 0/0
+# ip address 192.168.1.5 255.255.255.252
+# no shutdown
+# exit
+
+(Configuring the serial interface0/0/1)
+# interface fastEthernet 0/1
+# ip address 192.168.1.2 255.255.255.252
+# no shutdown
+# exit
+<-------------------Router5 configured------------------->
+
+
+<-----------------------Router6 Start----------------------->
+Router6: (Input the following commands one per line; # denotes commands)
+
+# enable
+# configure terminal
+
+(Configuring the serial interface0/0/0)
+# interface serial 0/0/0
+# ip address 192.168.0.10  255.255.255.252
+# no shutdown
+# exit
+
+(Configuring the serial interface0/0/1)
+# interface serial 0/0/1
+#ip address 192.168.2.10  255.255.255.252
+# no shutdown
+# exit
+
+(Configuring the ethernet interface)
+# interface fastEthernet 0/0
+# ip address 10.0.1.6 255.255.255.252
+# no shutdown
+# exit
+
+# interface fastEthernet 0/1
+# ip address 20.0.0.1 255.0.0.0
+# no shutdown
+# exit
+<-------------------Router6 configured------------------->
+
+
+<-------------------OSPF Configuration----------------->
+Router0:
+# router ospf 10
+# network 10.0.0.0 0.255.255.255 area 0
+# network 192.168.0.0 0.0.0.3 area 0
+# network 192.168.1.0 0.0.0.3 area 0
+# network 192.168.2.0 0.0.0.3 area 0
+# exit
+
+Router1:
+# router ospf 10
+# network 192.168.0.0 0.0.0.3 area 0
+# network 192.168.0.4 0.0.0.3 area 0
+#exit
+
+Router2:
+# router ospf 20
+# network 192.168.0.4 0.0.0.3 area 0
+# network 192.168.0.8 0.0.0.3 area 0
+#exit
+
+Router3:
+# router ospf 30
+# network 192.168.2.0 0.0.0.3 area 0
+# network 192.168.2.4 0.0.0.3 area 0
+#exit
+
+Router4:
+# router ospf 40
+# network 192.168.2.8 0.0.0.3 area 0
+# network 192.168.2.4 0.0.0.3 area 0
+#exit
+
+Router5:
+# router ospf 50
+# network 192.168.1.0 0.0.0.3 area 0
+# network 192.168.1.4 0.0.0.3 area 0
+#exit
+
+Router6:
+# router ospf 60
+# network 20.0.0.0 0.255.255.255 area 0
+# network 192.168.0.8 0.0.0.3 area 0
+# network 192.168.1.4 0.0.0.3 area 0
+# network 192.168.2.8 0.0.0.3 area 0
+# exit
+
+

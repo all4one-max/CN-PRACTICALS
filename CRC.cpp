@@ -2,6 +2,7 @@
 using namespace std;
 
 string divisor = "1101";
+// data = "110011"
 
 string get_rem(string data) {
     int n = data.size(), m = divisor.size();

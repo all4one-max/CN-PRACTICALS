@@ -2,6 +2,7 @@
 using namespace std;
 
 int reduntant_bits;
+// data = "1011001"
 
 string get_ham_code(string data) {
     int n = data.size(), j = n - 1;
@@ -16,11 +17,11 @@ string get_ham_code(string data) {
             }
         }
     }
-    int start = reduntant_bits - 1;
+    int start = 0;
     for (int i = m - 1; i >= 0 ; i--) {
         if (__builtin_popcount(m - i) == 1) {
             if (cnt[start] % 2) ham_code[i] = '1';
-            start--;
+            start++;
         }
     }
     return ham_code;
